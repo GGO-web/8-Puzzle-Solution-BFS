@@ -28,7 +28,7 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".html", ".tsx", ".ts", ".js"],
   },
   output: {
     filename: "index.js",

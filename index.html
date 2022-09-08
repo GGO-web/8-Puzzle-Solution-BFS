@@ -22,18 +22,117 @@
       <title>Game of 8 - algorithm BFS</title>
    </head>
    <body class="m-3">
+      <div class="states row gap-5 m-2">
+         <table
+            class="initial-state table table-primary table-hover table-bordered table-sm align-middle caption-top"
+            style="width: 200px; height: 200px; text-align: center;"
+         >
+            <caption class="fw-bold text-primary">
+               Initial State:
+            </caption>
+
+            <tbody>
+               <tr>
+                  <td contenteditable="true" class="align-middle">
+                     6
+                  </td>
+                  <td
+                     contenteditable="true"
+                     class="align-middle"
+                  ></td>
+                  <td contenteditable="true" class="align-middle">
+                     2
+                  </td>
+               </tr>
+               <tr>
+                  <td contenteditable="true" class="align-middle">
+                     3
+                  </td>
+                  <td contenteditable="true" class="align-middle">
+                     4
+                  </td>
+                  <td contenteditable="true" class="align-middle">
+                     8
+                  </td>
+               </tr>
+               <tr>
+                  <td contenteditable="true" class="align-middle">
+                     7
+                  </td>
+                  <td contenteditable="true" class="align-middle">
+                     1
+                  </td>
+                  <td contenteditable="true" class="align-middle">
+                     5
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+
+         <table
+            class="final-state table table-primary table-hover table-bordered table-sm align-middle caption-top"
+            style="width: 200px; height: 200px; text-align: center;"
+         >
+            <caption class="fw-bold text-primary">
+               Final State:
+            </caption>
+
+            <tbody>
+               <tr>
+                  <td contenteditable="true" class="align-middle">
+                     1
+                  </td>
+                  <td contenteditable="true" class="align-middle">
+                     2
+                  </td>
+                  <td contenteditable="true" class="align-middle">
+                     3
+                  </td>
+               </tr>
+               <tr>
+                  <td contenteditable="true" class="align-middle">
+                     4
+                  </td>
+                  <td contenteditable="true" class="align-middle">
+                     5
+                  </td>
+                  <td contenteditable="true" class="align-middle">
+                     6
+                  </td>
+               </tr>
+               <tr>
+                  <td contenteditable="true" class="align-middle">
+                     7
+                  </td>
+                  <td contenteditable="true" class="align-middle">
+                     8
+                  </td>
+                  <td
+                     contenteditable="true"
+                     class="align-middle"
+                  ></td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+
       <div class="buttons mb-3">
+         <button class="find btn btn-danger">
+            Find solution
+         </button>
+
          <button class="next btn btn-primary">
             Go to the next state
          </button>
 
          <button class="result btn btn-secondary">
-            Get result
+            Print console final result
          </button>
       </div>
 
-      <div id="results"></div>
-
-      <!-- <script src="dist/index.js" defer></script> -->
+      <div
+         id="results"
+         style="overflow: auto; max-height: 400px;"
+      ></div>
    </body>
 </html>
