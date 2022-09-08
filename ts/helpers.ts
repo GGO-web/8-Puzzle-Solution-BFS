@@ -14,7 +14,9 @@ export function* getExecutionTime() {
   console.log(`Execution time: ${execution} seconds`);
 }
 
-export const displayBoard = (state: IState, debug = true) => {
+export const displayBoard = (state: IState, index: number, debug = true) => {
+  console.log(`Index of the state ${index}`);
+
   let display = "";
   for (let row of state) {
     const cells = row.map((item) => (!item ? " " : item));

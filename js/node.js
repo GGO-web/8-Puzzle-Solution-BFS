@@ -24,8 +24,10 @@ export class Node {
       } while (currentNode?.getDepth() !== 0);
       stateList.reverse();
       moveList.reverse();
+      let index = 1;
       for (const item of stateList) {
-        displayBoard(item);
+        displayBoard(item, index);
+        index++;
       }
       console.log(`Кількість переміщень: ${moveList.length}`);
       console.log(`Переміщення по порядку: ${moveList.join(", ")}\n`);

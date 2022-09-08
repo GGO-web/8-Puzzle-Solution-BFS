@@ -7,16 +7,32 @@
          name="viewport"
          content="width=device-width, initial-scale=1.0"
       />
+      <link
+         href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+         rel="stylesheet"
+         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+         crossorigin="anonymous"
+      />
+      <script
+         src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+         crossorigin="anonymous"
+      ></script>
+
       <title>Game of 8 - algorithm BFS</title>
    </head>
-   <body>
-      <button class="next">
-         Go to the next state
-      </button>
+   <body class="m-3">
+      <div class="buttons mb-3">
+         <button class="next btn btn-primary">
+            Go to the next state
+         </button>
 
-      <button class="result">
-         Get result
-      </button>
+         <button class="result btn btn-secondary">
+            Get result
+         </button>
+      </div>
+
+      <div id="results"></div>
 
       <script type="module" src="js/index.js" defer></script>
    </body>

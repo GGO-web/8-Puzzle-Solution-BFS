@@ -53,8 +53,10 @@ export class Node {
     stateList.reverse();
     moveList.reverse();
 
+    let index = 1;
     for (const item of stateList) {
-      displayBoard(item);
+      displayBoard(item, index);
+      index++;
     }
 
     console.log(`Кількість переміщень: ${moveList.length}`);

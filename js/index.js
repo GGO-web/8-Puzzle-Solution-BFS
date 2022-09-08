@@ -3,14 +3,19 @@ import {
   finalState,
   initialState,
   production,
-  size,
 } from "./constants.js";
-import { displayBoard, getExecutionTime } from "./helpers.js";
+import {
+  displayBoard,
+  getEmpyCellCoords,
+  getExecutionTime,
+  isOutOfBorder,
+  statesAreEqual,
+} from "./helpers.js";
 import { Node } from "./node.js";
 const db = new Map();
 db.set(initialState.toString(), true);
 const queue = [new Node(initialState, null, null, 0, 0)];
-const allStates = [initialState];
+const allStates = [{ state: initialState, index: 1 }];
 let results = {
   currentState: null,
   moves: 0,
@@ -18,27 +23,6 @@ let results = {
   dropped: 0,
   depth: 0,
   haveSolution: false,
-};
-const getEmpyCellCoords = (state) => {
-  let coordinates = { x: 0, y: 0, name: "empty" };
-  outer: for (let i = 0; i < state[0].length; ++i) {
-    for (let j = 0; j < state.length; ++j) {
-      if (state[i][j] === null) {
-        coordinates.x = i;
-        coordinates.y = j;
-        break outer;
-      }
-    }
-  }
-  return coordinates;
-};
-const statesAreEqual = (state, secondState) => {
-  return state?.toString() === secondState?.toString();
-};
-const isOutOfBorder = (coords) => {
-  if (coords.x >= size || coords.x < 0) return true;
-  if (coords.y >= size || coords.y < 0) return true;
-  return false;
 };
 const printResults = () => {
   if (!results.haveSolution) {
@@ -102,7 +86,7 @@ const BFS = function () {
             )
           );
           db.set(copyState.toString(), true);
-          allStates.push(copyState);
+          allStates.push({ state: copyState, index: moves + 2 });
         } else {
           droppedStates++;
         }
@@ -110,14 +94,42 @@ const BFS = function () {
       }
     });
   }
+  // displayBoard(allStates[allStates.length - 1]);
 };
 if (production) {
   BFS();
   const nextStateButton = document.querySelector(".next");
   const resultButton = document.querySelector(".result");
+  const resultsWrapper = document.getElementById("results");
   let index = 0;
   nextStateButton?.addEventListener("click", () => {
-    displayBoard(allStates[index]);
+    resultsWrapper?.insertAdjacentHTML(
+      "beforeend",
+      `
+        <h2 class="text-primary fw-bold">Index of the state is ${allStates[index].index}</h2>
+      `
+    );
+    const table = document.createElement("table");
+    table.className +=
+      "table table-primary table-hover table-bordered table-sm align-middle";
+    table.style.width = "200px";
+    table.style.height = "200px";
+    const tbody = document.createElement("tbody");
+    for (let row of allStates[index].state) {
+      const tableRow = tbody.insertRow();
+      for (let col of row) {
+        const td = tableRow.insertCell();
+        td.classList.add("align-middle");
+        if (!col) {
+          td.innerHTML = " ";
+        } else {
+          td.innerHTML = String(col);
+        }
+      }
+    }
+    table.appendChild(tbody);
+    resultsWrapper?.appendChild(table);
+    displayBoard(allStates[index].state, allStates[index].index);
     index++;
   });
   resultButton?.addEventListener("click", () => {
