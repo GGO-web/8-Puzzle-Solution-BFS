@@ -25,24 +25,6 @@ let results: {
    haveSolution: false,
 };
 
-const printResults = () => {
-   if (!results.haveSolution) {
-      console.log(`Кількість відвіданих станів : ${results.moves}`);
-      console.log(`Кількість станів занесених у БД : ${results.settled} `);
-      console.log(`Кількість відкинутих станів : ${results.dropped}`);
-      console.log("Гра у 8 немає розв'язків");
-   } else {
-      console.log("Порядок переміщень для розв'язку гри в 8 :");
-      results?.currentState?.pathFromStart();
-      console.log(`Кількість відвіданих станів : ${results.moves}`);
-      console.log(`Кількість станів занесених у БД : ${results.settled} `);
-      console.log(`Кількість відкинутих станів : ${results.dropped}`);
-      console.log(
-         `Глибина дерева пошуку на якій знайдено рішення : ${results.depth}`
-      );
-   }
-};
-
 const BFS = function (
    initial: IState,
    final: IState,
@@ -120,8 +102,6 @@ const BFS = function (
       });
    }
 
-   // displayBoard(states[states.length - 1].state, 112);
-
    return states;
 };
 
@@ -130,109 +110,146 @@ const BFS = function (
       { state: initialState, index: 1 },
    ];
 
-   if (production) {
-      const nextStateButton = document.querySelector(
-         ".next"
-      ) as HTMLButtonElement;
-      const resultButton = document.querySelector(
-         ".result"
-      ) as HTMLButtonElement;
-      const findButton = document.querySelector(".find") as HTMLButtonElement;
+   const nextStateButton = document.querySelector(".next") as HTMLButtonElement;
+   const resultButton = document.querySelector(".result") as HTMLButtonElement;
+   const findButton = document.querySelector(".find") as HTMLButtonElement;
+   const resultContent = document.getElementById(
+      "result-content"
+   ) as HTMLElement;
 
-      nextStateButton.setAttribute("disabled", "true");
-      resultButton.setAttribute("disabled", "true");
+   let indexOfNextState = 0;
+   const resultsWrapper = document.getElementById("results") as Element;
 
-      const resultsWrapper = document.getElementById("results") as Element;
+   const unlockButtons = () => {
+      nextStateButton.disabled = false;
+      resultButton.disabled = false;
+   };
 
-      let index = 0;
-      nextStateButton?.addEventListener("click", () => {
-         // Add next new state table to the view
-         const table = document.createElement("table");
-         table.className +=
-            "table table-primary table-hover table-bordered table-sm align-middle caption-top";
-         table.style.width = "200px";
-         table.style.height = "200px";
-         table.style.textAlign = "center";
+   const disableButtons = () => {
+      nextStateButton.disabled = true;
+      resultButton.disabled = true;
+   };
 
-         table.insertAdjacentHTML(
-            "afterbegin",
+   const printResults = () => {
+      resultContent.innerHTML = "";
+
+      if (!results.haveSolution) {
+         console.log(`Кількість відвіданих станів: ${results.moves}`);
+         console.log(`Кількість станів занесених у БД: ${results.settled}`);
+         console.log(`Кількість відкинутих станів: ${results.dropped}`);
+         console.log("Гра у 8 немає розв'язків");
+
+         resultContent.insertAdjacentHTML(
+            "beforeend",
             `
-               <caption class="fw-bold text-primary">Index of the state is ${allStates[index].index}</caption>
-            `
+            <code>
+            <pre>Кількість відвіданих станів : ${results.moves}<br>Кількість станів занесених у БД : ${results.settled}<br>Кількість відкинутих станів : ${results.dropped}<br>Гра у 8 немає розв'язків</pre>
+            </code>
+         `
+         );
+      } else {
+         console.log("Порядок переміщень для розв'язку гри в 8:");
+         results?.currentState?.pathFromStart();
+         console.log(`Кількість відвіданих станів: ${results.moves}`);
+         console.log(`Кількість станів занесених у БД: ${results.settled}`);
+         console.log(`Кількість відкинутих станів: ${results.dropped}`);
+         console.log(
+            `Глибина дерева пошуку на якій знайдено рішення: ${results.depth}`
          );
 
-         const tbody = document.createElement("tbody");
-         for (let row of allStates[index].state) {
-            const tableRow = tbody.insertRow();
+         resultContent.insertAdjacentHTML(
+            "beforeend",
+            `
+            <code>
+            <pre>Кількість відвіданих станів: ${results.moves}<br>Кількість станів занесених у БД: ${results.settled}<br>Кількість відкинутих станів: ${results.dropped}<br>Глибина дерева пошуку на якій знайдено рішення: ${results.depth}</pre>
+            </code>
+         `
+         );
+      }
+   };
 
-            for (let col of row) {
-               const td = tableRow.insertCell();
-               td.classList.add("align-middle");
-               if (!col) {
-                  td.innerHTML = " ";
-               } else {
-                  td.innerHTML = String(col);
-               }
+   disableButtons();
+
+   nextStateButton?.addEventListener("click", () => {
+      // Add next new state table to the view
+      const table = document.createElement("table");
+      table.className +=
+         "table table-primary table-hover table-bordered table-sm align-middle caption-top";
+      table.style.width = "200px";
+      table.style.height = "200px";
+      table.style.textAlign = "center";
+
+      table.insertAdjacentHTML(
+         "afterbegin",
+         `
+               <caption class="fw-bold text-primary">
+                  Index of the state is ${allStates[indexOfNextState].index}
+               </caption>
+            `
+      );
+
+      const tbody = document.createElement("tbody");
+      for (let row of allStates[indexOfNextState].state) {
+         const tableRow = tbody.insertRow();
+
+         for (let col of row) {
+            const td = tableRow.insertCell();
+            td.classList.add("align-middle");
+            if (!col) {
+               td.innerHTML = " ";
+            } else {
+               td.innerHTML = String(col);
             }
          }
+      }
 
-         table.appendChild(tbody);
-         resultsWrapper?.appendChild(table);
+      table.appendChild(tbody);
+      resultsWrapper?.appendChild(table);
 
-         resultsWrapper.scrollTop = resultsWrapper.scrollHeight;
+      resultsWrapper.scrollTop = resultsWrapper.scrollHeight;
 
-         // print results to the console
-         displayBoard(allStates[index].state, allStates[index].index);
+      // print results to the console
+      displayBoard(
+         allStates[indexOfNextState].state,
+         allStates[indexOfNextState].index
+      );
 
-         index++;
-      });
+      indexOfNextState++;
+   });
 
-      resultButton?.addEventListener("click", () => {
-         printResults();
-      });
-
-      findButton?.addEventListener("click", () => {
-         const getTableState = (table: HTMLTableElement): IState => {
-            const state: IState = [];
-            for (let row of table.rows) {
-               const stateRow = [];
-               for (let cell of row.cells) {
-                  const cellData = parseInt(cell.innerHTML);
-
-                  Number.isNaN(cellData)
-                     ? stateRow.push(null)
-                     : stateRow.push(cellData);
-               }
-               state.push(stateRow);
-            }
-
-            return state;
-         };
-
-         const initialStateTable = document.querySelector(".initial-state");
-         const finalStateTable = document.querySelector(".final-state");
-         const initial = getTableState(initialStateTable as HTMLTableElement);
-         const final = getTableState(finalStateTable as HTMLTableElement);
-
-         // reset step by step results output
-         const states = [{ state: initial, index: 1 }];
-         index = 0;
-         (resultsWrapper as any).innerHTML = null;
-         nextStateButton.disabled = true;
-         resultButton.disabled = true;
-
-         allStates = BFS(initial, final, states);
-
-         nextStateButton.disabled = false;
-         resultButton.disabled = false;
-      });
-   } else {
-      const timer = getExecutionTime();
-
-      timer.next();
-      BFS(initialState, finalState, allStates);
-      timer.next();
-
+   resultButton?.addEventListener("click", () => {
       printResults();
-   }
+   });
+
+   findButton?.addEventListener("click", () => {
+      const getTableState = (table: HTMLTableElement): IState => {
+         const state: IState = [];
+         for (let row of table.rows) {
+            const stateRow = [];
+            for (let cell of row.cells) {
+               const cellData = parseInt(cell.innerHTML);
+
+               Number.isNaN(cellData)
+                  ? stateRow.push(null)
+                  : stateRow.push(cellData);
+            }
+            state.push(stateRow);
+         }
+
+         return state;
+      };
+
+      const initialStateTable = document.querySelector(".initial-state");
+      const finalStateTable = document.querySelector(".final-state");
+
+      const initial = getTableState(initialStateTable as HTMLTableElement);
+      const final = getTableState(finalStateTable as HTMLTableElement);
+
+      // reset step by step results output
+      indexOfNextState = 0;
+      (resultsWrapper as any).innerHTML = null;
+
+      allStates = BFS(initial, final, [{ state: initial, index: 1 }]);
+      unlockButtons();
+   });
 })();

@@ -19,6 +19,8 @@
          crossorigin="anonymous"
       ></script>
 
+      <link rel="icon" type="image/svg" href="images/favicon.svg" />
+
       <title>Game of 8 - algorithm BFS</title>
    </head>
    <body class="m-3">
@@ -33,36 +35,69 @@
 
             <tbody>
                <tr>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      6
                   </td>
                   <td
                      contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
                      class="align-middle"
                   ></td>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      2
                   </td>
                </tr>
                <tr>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      3
                   </td>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      4
                   </td>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      8
                   </td>
                </tr>
                <tr>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      7
                   </td>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      1
                   </td>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      5
                   </td>
                </tr>
@@ -79,36 +114,69 @@
 
             <tbody>
                <tr>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      1
                   </td>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      2
                   </td>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      3
                   </td>
                </tr>
                <tr>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      4
                   </td>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      5
                   </td>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      6
                   </td>
                </tr>
                <tr>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      7
                   </td>
-                  <td contenteditable="true" class="align-middle">
+                  <td
+                     contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
+                     class="align-middle"
+                  >
                      8
                   </td>
                   <td
                      contenteditable="true"
+                     onclick="document.execCommand('selectAll', false, null)"
                      class="align-middle"
                   ></td>
                </tr>
@@ -125,8 +193,12 @@
             Go to the next state
          </button>
 
-         <button class="result btn btn-secondary">
-            Print console final result
+         <button
+            class="result btn btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#result-modal"
+         >
+            Print final result
          </button>
       </div>
 
@@ -134,5 +206,38 @@
          id="results"
          style="overflow: auto; max-height: 400px;"
       ></div>
+
+      <div
+         class="modal fade"
+         tabindex="-1"
+         aria-hidden="true"
+         id="result-modal"
+      >
+         <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">
+                     8 Puzzle game results:
+                  </h5>
+                  <button
+                     type="button"
+                     class="btn-close"
+                     data-bs-dismiss="modal"
+                     aria-label="Close"
+                  ></button>
+               </div>
+               <div id="result-content" class="modal-body"></div>
+               <div class="modal-footer">
+                  <button
+                     type="button"
+                     class="btn btn-secondary"
+                     data-bs-dismiss="modal"
+                  >
+                     Close
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
    </body>
 </html>
